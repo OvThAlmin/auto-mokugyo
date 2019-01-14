@@ -2,38 +2,63 @@
   <section class="container">
     <div>
       <logo/>
-      <h1 class="title">
-        auto-mokugyo
-      </h1>
-      <h2 class="subtitle">
-        My ultimate Nuxt.js project
-      </h2>
+      <h1 class="title">auto-mokugyo</h1>
+      <h2 class="subtitle">My ultimate Nuxt.js project</h2>
+      <button @click="addCount">カウントアップ</button>
+      <p>count={{count}}</p>
       <div class="links">
-        <a
-          href="https://nuxtjs.org/"
-          target="_blank"
-          class="button--green">Documentation</a>
-        <a
-          href="https://github.com/nuxt/nuxt.js"
-          target="_blank"
-          class="button--grey">GitHub</a>
+        <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
+        <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
       </div>
     </div>
   </section>
 </template>
 
 <script>
-import Logo from '~/components/Logo.vue'
+import Logo from "~/components/Logo.vue";
+import clickSound from "~/assets/wood-block01.mp3";
 
 export default {
   components: {
     Logo
+  },
+  computed: {
+    count() {
+      return this.$store.state.counter.count;
+    }
+  },
+  methods: {
+    addCount(e) {
+      // this.$store.commit("counter/add");
+
+      const context = new AudioContext();
+
+      //再生するバッファを準備
+      const prepareBuffer = async path => {
+        //2. fetch APIで音声ファイルを取得
+        const res = await fetch(path);
+        //ArrayBufferを取得
+        const arr = await res.arrayBuffer();
+        //3. 音声ファイルをデコード
+        const buf = await context.decodeAudioData(arr);
+
+        return buf;
+      };
+
+      const play = async () => {
+        const source = context.createBufferSource(); //4. Sourceノードを作成
+        source.buffer = await prepareBuffer(clickSound); //5. 再生するバッファを指定
+        source.connect(context.destination); // SourceノードをDestinationにつなぐ
+        source.start(0); //6. 再生開始
+      };
+
+      play();
+    }
   }
-}
+};
 </script>
 
 <style>
-
 .container {
   min-height: 100vh;
   display: flex;
@@ -43,8 +68,8 @@ export default {
 }
 
 .title {
-  font-family: 'Quicksand', 'Source Sans Pro', -apple-system, BlinkMacSystemFont,
-    'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  font-family: "Quicksand", "Source Sans Pro", -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   display: block;
   font-weight: 300;
   font-size: 100px;
