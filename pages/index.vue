@@ -1,16 +1,8 @@
 <template>
   <section class="container">
     <div>
-      <logo/>
       <h1 class="title">auto-mokugyo</h1>
-      <h2 class="subtitle">My ultimate Nuxt.js project</h2>
-      <button @click="callSound">Start</button>
-      <button @click="stopSound">Stop</button>
-      <p>count={{count}}</p>
-      <div class="links">
-        <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
-        <a href="https://github.com/nuxt/nuxt.js" target="_blank" class="button--grey">GitHub</a>
-      </div>
+      <button class="button is-medium is-primary" @click="callSound">Start</button>
     </div>
   </section>
 </template>
@@ -55,9 +47,6 @@ export default {
       };
 
       play();
-    },
-    stopSound(e) {
-      context.close();
     }
   }
 };
@@ -77,7 +66,7 @@ export default {
     "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
   display: block;
   font-weight: 300;
-  font-size: 100px;
+  font-size: 48px;
   color: #35495e;
   letter-spacing: 1px;
 }
