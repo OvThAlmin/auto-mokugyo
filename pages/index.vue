@@ -4,7 +4,8 @@
       <logo/>
       <h1 class="title">auto-mokugyo</h1>
       <h2 class="subtitle">My ultimate Nuxt.js project</h2>
-      <button @click="addCount">カウントアップ</button>
+      <button @click="callSound">Start</button>
+      <button @click="stopSound">Stop</button>
       <p>count={{count}}</p>
       <div class="links">
         <a href="https://nuxtjs.org/" target="_blank" class="button--green">Documentation</a>
@@ -28,7 +29,7 @@ export default {
     }
   },
   methods: {
-    addCount(e) {
+    callSound(e) {
       // this.$store.commit("counter/add");
 
       const context = new AudioContext();
@@ -49,10 +50,14 @@ export default {
         const source = context.createBufferSource(); //4. Sourceノードを作成
         source.buffer = await prepareBuffer(clickSound); //5. 再生するバッファを指定
         source.connect(context.destination); // SourceノードをDestinationにつなぐ
+        source.loop = true;
         source.start(0); //6. 再生開始
       };
 
       play();
+    },
+    stopSound(e) {
+      context.close();
     }
   }
 };
