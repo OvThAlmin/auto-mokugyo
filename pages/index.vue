@@ -8,12 +8,10 @@
 </template>
 
 <script>
-import Logo from "~/components/Logo.vue";
 import clickSound from "~/assets/wood-block01.mp3";
 
 export default {
   components: {
-    Logo
   },
   computed: {
     count() {
@@ -69,14 +67,6 @@ export default {
   font-size: 48px;
   color: #35495e;
   letter-spacing: 1px;
-}
-
-.subtitle {
-  font-weight: 300;
-  font-size: 42px;
-  color: #526488;
-  word-spacing: 5px;
-  padding-bottom: 15px;
 }
 
 .links {
